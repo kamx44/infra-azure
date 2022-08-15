@@ -18,8 +18,7 @@ pipeline {
                     clientSecretVariable: 'ARM_CLIENT_SECRET',
                     tenantIdVariable: 'ARM_TENANT_ID'
                 ),
-                (credentialsId: 'infra_state_access_key',
-                variable: 'ARM_ACCESS_KEY')
+                string(credentialsId: 'infra_state_access_key', variable: 'ARM_ACCESS_KEY')
                 ]) {
                         dir("src") {
                         sh """
