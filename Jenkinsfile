@@ -6,6 +6,7 @@ pipeline {
         stage("test"){
             steps {
                 sh( script: 'echo "test test" ', returnStdout: true)
+                sh( script: 'ls ', returnStdout: true)
             }
         }
 
@@ -20,13 +21,11 @@ pipeline {
                 ),
                 string(credentialsId: 'infra_state_access_key', variable: 'ARM_ACCESS_KEY')
                 ]) {
-                        dir("src") {
-                        sh """
-                        echo "Initialising Terraform"
-                        terraform init -backend-config="access_key=$ARM_ACCESS_KEY"
-                        """
-                        }
-                     }
+                    sh """
+                    echo "Initialising Terraform"
+                    terraform init -backend-config="access_key=$ARM_ACCESS_KEY"
+                    """
+                }
             }
         }
 
