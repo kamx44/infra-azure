@@ -39,13 +39,11 @@ pipeline {
                     tenantIdVariable: 'ARM_TENANT_ID'
                 )
                 ]) {
-                        dir("src") {
-                        sh """
-                        echo "Terraform Plan Creation"
-                        terraform plan
-                        """
-                        }
-                     }
+                    sh """
+                    echo "Terraform Plan Creation"
+                    terraform plan
+                    """
+                }
             }
         }
     }
