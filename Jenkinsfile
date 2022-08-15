@@ -38,13 +38,12 @@ pipeline {
                     clientIdVariable: 'ARM_CLIENT_ID',
                     clientSecretVariable: 'ARM_CLIENT_SECRET',
                     tenantIdVariable: 'ARM_TENANT_ID'
-                ),
-                string(credentialsId: 'infra_state_access_key', variable: 'ARM_ACCESS_KEY')
+                )
                 ]) {
                         dir("src") {
                         sh """
                         echo "Terraform Plan Creation"
-                        terraform plan -backend-config="access_key=$ARM_ACCESS_KEY"
+                        terraform plan
                         """
                         }
                      }
