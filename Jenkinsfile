@@ -2,6 +2,10 @@ pipeline {
 
     agent any
 
+    environment {
+        ENV_NAME = "${env.BRANCH_NAME == "prod" ? "prod" : "dev"}"
+    }
+
     stages{
         stage("test"){
             steps {
@@ -24,7 +28,7 @@ pipeline {
                     ]) {
                         sh """
                         echo "Initialising Terraform"
-                        terraform init -backend-config="access_key=$ARM_ACCESS_KEY"
+                        terraform init -backend-config="access_key=$ARM_ACCESS_KEY" -var-file="${ENV_NAME}.tfvars"
                         """
                     }
                 }
@@ -44,7 +48,7 @@ pipeline {
                     ]) {
                         sh """
                         echo "Terraform Plan Creation"
-                        terraform plan
+                        terraform plan -var-file="${ENV_NAME}.tfvars"
                         """
                     }
                 }

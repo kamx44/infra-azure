@@ -18,11 +18,15 @@ provider "azurerm" {
   features {}
 }
 
-variable "prefix" {
-  default = "infra"
+locals {
+    rg_name = "${var.rg_prefix_name}-${var.environment}"
+    main_tags = {"environment" = "${var.environment}"}
 }
 
-resource "azurerm_resource_group" "jenkins_rg" {
-  name     = "${var.prefix}-resources"
-  location = "East US"
+
+module "azurerm_resource_group" {
+    source      = "./modules/resource_group"
+    name        = local.rg_name
+    location    = var.location
+    tags        = local.main_tags
 }
