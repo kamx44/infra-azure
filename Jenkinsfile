@@ -4,6 +4,7 @@ pipeline {
 
     environment {
         ENV_NAME = "${env.BRANCH_NAME == "prod" ? "prod" : "dev"}"
+        TERRAFORM_DIR = "terraform"
     }
 
     stages{
@@ -26,10 +27,12 @@ pipeline {
                     ),
                     string(credentialsId: 'infra_state_access_key', variable: 'ARM_ACCESS_KEY')
                     ]) {
-                        sh """
-                        echo "Initialising Terraform"
-                        terraform init -backend-config="access_key=$ARM_ACCESS_KEY" -var-file="${ENV_NAME}.tfvars"
-                        """
+                        dir(env.TERRAFORM_DIR) {
+                                sh """
+                            echo "Initialising Terraform"
+                            terraform init -backend-config="access_key=$ARM_ACCESS_KEY" -var-file="${ENV_NAME}.tfvars"
+                            """
+                        }
                     }
                 }
             }
@@ -46,10 +49,12 @@ pipeline {
                         tenantIdVariable: 'ARM_TENANT_ID'
                     )
                     ]) {
-                        sh """
-                        echo "Terraform Plan Creation"
-                        terraform plan -var-file="${ENV_NAME}.tfvars"
-                        """
+                        dir(env.TERRAFORM_DIR) {
+                            sh """
+                            echo "Terraform Plan Creation"
+                            terraform plan -var-file="${ENV_NAME}.tfvars"
+                            """
+                        }
                     }
                 }
             }
