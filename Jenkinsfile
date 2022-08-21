@@ -59,6 +59,34 @@ pipeline {
                 }
             }
         }
+
+        stage("Terraform apply"){
+            steps{
+                ansiColor('xterm'){
+                    withCredentials([azureServicePrincipal(
+                        credentialsId: 'azure_service_principal',
+                        subscriptionIdVariable: 'ARM_SUBSCRIPTION_ID',
+                        clientIdVariable: 'ARM_CLIENT_ID',
+                        clientSecretVariable: 'ARM_CLIENT_SECRET',
+                        tenantIdVariable: 'ARM_TENANT_ID'
+                    )
+                    ]) {
+                        dir(env.TERRAFORM_DIR) {
+                            sh """
+                            echo "Terraform Plan Creation"
+                            terraform apply -auto-approve -var-file="./vars/${ENV_NAME}.tfvars"
+                            """
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    post{
+        always{
+            cleanWs()
+        }
     }
 
 }
