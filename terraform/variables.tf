@@ -20,3 +20,8 @@ variable environment {
       error_message = "environment needs to have value either prod or dev"
     }
 }
+
+variable "ssh_public_key" {
+    description = "Public key for access to Kube servers"
+    type = string
+}

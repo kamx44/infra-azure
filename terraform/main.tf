@@ -29,4 +29,5 @@ module "cluster" {
     name        = local.rg_name
     location    = var.location
     tags        = local.main_tags
+    ssh_key     = var.ssh_public_key
 }

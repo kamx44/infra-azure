@@ -15,5 +15,4 @@ variable "kube_version" {
 }
 
 variable "ssh_key" {
-    default = "~/.ssh/az_rsa"
 }
