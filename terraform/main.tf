@@ -24,8 +24,8 @@ locals {
 }
 
 
-module "azurerm_resource_group" {
-    source      = "./modules/resource_group"
+module "cluster" {
+    source      = "./modules/cluster"
     name        = local.rg_name
     location    = var.location
     tags        = local.main_tags
