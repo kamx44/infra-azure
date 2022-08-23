@@ -15,4 +15,5 @@ variable "kube_version" {
 }
 
 variable "ssh_key" {
+    sensitive = true
 }
