@@ -4,6 +4,10 @@ terraform {
       source  = "hashicorp/azurerm"
       version = "=3.18.0"
     }
+    azuread = {
+      source  = "hashicorp/azuread"
+      version = "~> 2.15.0"
+    }
   }
   backend "azurerm" {
     resource_group_name  = "tfstatesRG"
@@ -38,4 +42,12 @@ module "k8s" {
     client_certificate      = "${base64decode(module.cluster.client_certificate)}"
     client_key              = "${base64decode(module.cluster.client_key)}"
     cluster_ca_certificate  = "${base64decode(module.cluster.cluster_ca_certificate)}"
+}
+
+module "ad" {
+    source = "./modules/ad"
+    aks-user-full-name = "Kamil User"
+    aks-user-principal-name = "kamiluser"
+    aks-user-password = "temppassword123!"
+    aks-group-name = "AKSGroup"
 }
