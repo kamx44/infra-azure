@@ -15,7 +15,7 @@ resource "kubernetes_deployment" "myapp" {
   }
 
   spec {
-    replicas = 1
+    replicas = 3
     progress_deadline_seconds = 600
     revision_history_limit = 10
 

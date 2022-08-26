@@ -30,7 +30,7 @@ pipeline {
                         dir(env.TERRAFORM_DIR) {
                                 sh """
                             echo "Initialising Terraform"
-                            terraform init -backend-config="access_key=$ARM_ACCESS_KEY" -var-file="./vars/${ENV_NAME}.tfvars"
+                            terraform init -backend-config="access_key=$ARM_ACCESS_KEY"
                             """
                         }
                     }
