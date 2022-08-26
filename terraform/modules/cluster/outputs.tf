@@ -17,3 +17,8 @@ output "host" {
   value     = azurerm_kubernetes_cluster.aks-cluster-kj.kube_config.0.host
   sensitive = true
 }
+
+
+output "cluster_id" {
+  value     = azurerm_kubernetes_cluster.aks-cluster-kj.id
+}

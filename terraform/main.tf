@@ -44,10 +44,9 @@ module "k8s" {
     cluster_ca_certificate  = "${base64decode(module.cluster.cluster_ca_certificate)}"
 }
 
-module "ad" {
-    source = "./modules/ad"
-    aks-user-full-name = "Kamil User"
-    aks-user-principal-name = "kamiluser"
-    aks-user-password = "temppassword123!"
-    aks-group-name = "AKSGroup"
+
+resource "azurerm_role_assignment" "example" {
+  scope                = module.cluster.cluster_id
+  role_definition_name = "Azure Kubernetes Service Cluster User Role"
+  principal_id         = var.aks-user-id
 }

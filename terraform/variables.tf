@@ -25,3 +25,9 @@ variable "ssh_public_key" {
     description = "Public key for access to Kube servers"
     type = string
 }
+
+
+variable "aks-user-id" {
+    description = "aks user id"
+    type = string
+}
